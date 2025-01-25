@@ -52,6 +52,6 @@ def euroBankaGiseGetir(link, cevrimAdet):
     print(f"\n--- Hesaplama için {cevrimAdet} adet döviz kullanılmıştır...")
     print(f"--- Ortalama Alış Fiyatı : {ortalamaAl(len(veriler), veriler):.2f}")
 
-    print(f"\n--- Alış Ortalaması ile {cevrimAdet} EURO : { int(cevrimAdet) * ortalamaAl(len(veriler), veriler):.2f} TL")
+    print(f"\n--- Alış Ortalaması ------------------------> {cevrimAdet} EURO : { int(cevrimAdet) * ortalamaAl(len(veriler), veriler):.2f} TL")
     
     # print(df["Alış"].mean()) #Ortalama Pandas işleri kolaylaştırır gibi
