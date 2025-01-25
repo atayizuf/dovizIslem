@@ -4,8 +4,14 @@ from bs4 import BeautifulSoup
 import re
 import pandas as pd
 
-
 def euroBankaGiseGetir(link, cevrimAdet):
+    Data ={
+        "Alan Kurum": [],
+        "Alış": [],
+        "Satis": [],
+        "Fark": [],
+        "Saat": []
+    }
     istek = requests.get(link)
     pars = BeautifulSoup(istek.content, "html.parser")
     yazi = pars.find("tbody", {"class": "tbody-type-default"}).find_all("strong")
@@ -22,12 +28,17 @@ def euroBankaGiseGetir(link, cevrimAdet):
             deger3 = deger2[0] + "." + deger2[1]
             sonuc = kacadet * float(deger3)
             veriler.append(deger3)
-            print(
-                isim.strip() + " alis fiyatından : 1 x " + deger3,
-                saat,
-                "-------------",
-                f"{sonuc:.2f}",
-            )
+            Data["Alan Kurum"].append(isim.strip())
+            Data["Alış"].append(float(deger3))
+            Data["Satis"].append(satis)
+            Data["Fark"].append(fark)
+            Data["Saat"].append(saat)
+            # print(
+            #     isim.strip() + " alis fiyatından : 1 x " + deger3,
+            #     saat,
+            #     "-------------",
+            #     f"{sonuc:.2f}",
+            # )
 
     def ortalamaAl(kacadet, deger3):
         toplam = 0
@@ -35,10 +46,7 @@ def euroBankaGiseGetir(link, cevrimAdet):
             toplam += float(deger3[i])
         return toplam / kacadet
     
-
-
-
+    print(pd.DataFrame(Data))
     print(f"--- Hesaplama için {cevrimAdet} adet döviz kullanılmıştır...")
-
     print(f"\n--- Ortalama Alış Fiyatı İçin {len(veriler)} adet Fiyat geldi.")
     print(f"\n--- Ortalama Alış Fiyatı : {ortalamaAl(len(veriler), veriler):.2f}")
