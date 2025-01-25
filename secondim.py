@@ -10,7 +10,7 @@ def euroBankaGiseGetir(link, cevrimAdet):
     pars = BeautifulSoup(istek.content, "html.parser")
     yazi = pars.find("tbody", {"class": "tbody-type-default"}).find_all("strong")
     kacadet = int(cevrimAdet)
-    # veriler = []
+    veriler = []
     for i in yazi:
         isim = i.string
         if re.search(".*Euro.*", isim):
@@ -21,7 +21,7 @@ def euroBankaGiseGetir(link, cevrimAdet):
             deger2 = alis.split(",")
             deger3 = deger2[0] + "." + deger2[1]
             sonuc = kacadet * float(deger3)
-            # veriler.append(deger3)
+            veriler.append(deger3)
             print(
                 isim.strip() + " alis fiyatından : 1 x " + deger3,
                 saat,
@@ -29,13 +29,16 @@ def euroBankaGiseGetir(link, cevrimAdet):
                 f"{sonuc:.2f}",
             )
 
-    def ortalamaAl():
+    def ortalamaAl(kacadet, deger3):
         toplam = 0
         for i in range(kacadet):
-            toplam += float(deger3)
+            toplam += float(deger3[i])
         return toplam / kacadet
-    # ms = pd.DataFrame(veriler)
-    # print(ms)
-    # print("bursa")
-    # print(float(ms.iloc[2, 0]) * 2)
-    return print(f"--- Hesaplama için {cevrimAdet} adet döviz kullanılmıştır...")
+    
+
+
+
+    print(f"--- Hesaplama için {cevrimAdet} adet döviz kullanılmıştır...")
+
+    print(f"\n--- Ortalama Alış Fiyatı İçin {len(veriler)} adet Fiyat geldi.")
+    print(f"\n--- Ortalama Alış Fiyatı : {ortalamaAl(len(veriler), veriler):.2f}")
