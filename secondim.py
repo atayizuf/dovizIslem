@@ -29,7 +29,7 @@ def euroBankaGiseGetir(link, cevrimAdet):
             sonuc = kacadet * float(deger3)
             veriler.append(deger3)
             Data["Alan Kurum"].append(isim.strip())
-            Data["Alış"].append(float(deger3))
+            Data["Alış"].append(alis)
             Data["Satis"].append(satis)
             Data["Fark"].append(fark)
             Data["Saat"].append(saat)
@@ -46,7 +46,12 @@ def euroBankaGiseGetir(link, cevrimAdet):
             toplam += float(deger3[i])
         return toplam / kacadet
     
-    print(pd.DataFrame(Data))
-    print(f"--- Hesaplama için {cevrimAdet} adet döviz kullanılmıştır...")
-    print(f"\n--- Ortalama Alış Fiyatı İçin {len(veriler)} adet Fiyat geldi.")
-    print(f"\n--- Ortalama Alış Fiyatı : {ortalamaAl(len(veriler), veriler):.2f}")
+    df=pd.DataFrame(Data)
+    veri=df.sort_values(by=['Alış'], ascending=False) #Sıralama
+    print(veri)
+    print(f"\n--- Hesaplama için {cevrimAdet} adet döviz kullanılmıştır...")
+    print(f"--- Ortalama Alış Fiyatı : {ortalamaAl(len(veriler), veriler):.2f}")
+
+    print(f"\n--- Alış Ortalaması ile {cevrimAdet} EURO : { int(cevrimAdet) * ortalamaAl(len(veriler), veriler):.2f} TL")
+    
+    # print(df["Alış"].mean()) #Ortalama Pandas işleri kolaylaştırır gibi
